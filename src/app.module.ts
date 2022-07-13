@@ -3,12 +3,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { LocationsModule } from './locations/locations.module';
 import { ChargersModule } from './chargers/chargers.module';
 
-console.log(process.env['MONGO_URL'])
-
 @Module({
   imports: [
     MongooseModule.forRoot(process.env['MONGO_URL'], {
       sslValidate: false,
+      dbName: 'electrify',
     }),
     LocationsModule,
     ChargersModule,

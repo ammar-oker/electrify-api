@@ -18,14 +18,16 @@ export class LocationsService {
   async findAll({
     page = 1,
     perPage = 10,
-    type = 'asc',
-    by = 'name',
+    type,
+    by,
   }: QueryDto): Promise<ApiResponseDto<Location>> {
+    const sort = type && by ? { [by]: type } : undefined;
     const data = await this.locationModel
-      .find()
-      .sort({ [by]: type })
-      .limit(perPage)
-      .skip(perPage * (page - 1))
+      .find(undefined, undefined, {
+        sort,
+        skip: perPage * (page - 1),
+        limit: perPage,
+      })
       .exec();
 
     const total = await this.locationModel.count();

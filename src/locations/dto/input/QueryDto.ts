@@ -1,15 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export default class {
-  @ApiProperty()
+  @ApiProperty({ required: false })
   by?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false, enum: ['asc', 'desc'] })
   type?: 'asc' | 'desc';
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   page?: number;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   perPage?: number;
 }

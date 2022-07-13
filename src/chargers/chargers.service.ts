@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Location } from '../locations/location.schema';
 import { Charger } from './charger.schema';
 import CreateChargerDto from './dto/CreateChargerDto';
@@ -16,6 +16,16 @@ export class ChargersService {
     locationId: string,
     createCharger: CreateChargerDto,
   ): Promise<Charger> {
+    const foundLocation =
+      Types.ObjectId.isValid(locationId) &&
+      (await this.locationModel.exists({ _id: locationId }));
+
+    if (!foundLocation) {
+      throw new NotFoundException(
+        `Cannot find the location with the ID ${locationId}`,
+      );
+    }
+
     const charger = await this.chargerModel.create(createCharger);
     await this.locationModel.findByIdAndUpdate(locationId, {
       $push: { chargers: charger.id },
