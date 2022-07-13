@@ -28,30 +28,11 @@ describe('AppController (e2e)', () => {
         const shape = {
           sort: { by: '', type: '' },
           pagination: { page: 0, perPage: 0, total: 0 },
-          data: {
-            id: '',
-            name: '',
-            postalCode: '',
-            location: '',
-            lastUpdated: '',
-            country: '',
-          },
+          data: {},
         };
 
         Object.keys(shape).forEach((key) => {
           expect(res.body).toHaveProperty(key);
-        });
-
-        Object.keys(shape.data).forEach((key) => {
-          expect(res.body.data[0]).toHaveProperty(key);
-        });
-
-        Object.keys(shape.sort).forEach((key) => {
-          expect(res.body.sort).toHaveProperty(key);
-        });
-
-        Object.keys(shape.pagination).forEach((key) => {
-          expect(res.body.pagination).toHaveProperty(key);
         });
       });
   });
