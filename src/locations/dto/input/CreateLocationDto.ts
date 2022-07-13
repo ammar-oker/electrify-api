@@ -1,11 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import CreateChargerDto from '../../../chargers/dto/CreateChargerDto';
 import {
+  IsArray,
   IsISO31661Alpha3,
   IsPostalCode,
   MaxLength,
   MinLength,
+  ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export default class CreateLocationDto {
   @ApiProperty()
@@ -17,7 +20,7 @@ export default class CreateLocationDto {
   location: number;
 
   @ApiProperty()
-  @IsPostalCode('NL')
+  @IsPostalCode('any')
   postalCode: string;
 
   @ApiProperty()
@@ -25,5 +28,8 @@ export default class CreateLocationDto {
   country: string;
 
   @ApiProperty({ type: [CreateChargerDto] })
+  @IsArray()
+  @ValidateNested()
+  @Type(() => CreateChargerDto)
   chargers: CreateChargerDto[];
 }

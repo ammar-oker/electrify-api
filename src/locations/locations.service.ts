@@ -21,7 +21,7 @@ export class LocationsService {
     type,
     by,
   }: QueryDto): Promise<ApiResponseDto<Location>> {
-    const sort = type && by ? { [by]: type } : undefined;
+    const sort = { [by || 'lastUpdated']: type || 'desc' };
     const data = await this.locationModel
       .find(undefined, undefined, {
         sort,
@@ -59,6 +59,7 @@ export class LocationsService {
   async update(id: string, locationDto: UpdateLocationDto) {
     return await this.locationModel
       .findByIdAndUpdate(id, locationDto, { new: true })
+      .populate('chargers')
       .exec();
   }
 }
