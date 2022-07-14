@@ -44,6 +44,8 @@ USER node
 FROM node:18-alpine As production
 
 ARG mongourl
+ARG dbname
+ENV DB_NAME=${dbname}
 ENV MONGO_URL=${mongourl}
 
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
