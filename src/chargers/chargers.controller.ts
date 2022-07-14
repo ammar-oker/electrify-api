@@ -21,8 +21,11 @@ export class ChargersController {
     return await this.chargerService.update(id, body);
   }
 
-  @Delete(':id')
-  async delete(@Param('id') id: string) {
-    await this.chargerService.delete(id);
+  @Delete(':locationId/:chargerId')
+  async delete(
+    @Param('locationId') locationId: string,
+    @Param('chargerId') chargerId: string,
+  ) {
+    await this.chargerService.delete(locationId, chargerId);
   }
 }

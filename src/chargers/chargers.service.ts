@@ -4,6 +4,7 @@ import { Model, Types } from 'mongoose';
 import { Location } from '../locations/location.schema';
 import { Charger } from './charger.schema';
 import CreateChargerDto from './dto/CreateChargerDto';
+import * as mongoose from 'mongoose';
 
 @Injectable()
 export class ChargersService {
@@ -40,7 +41,10 @@ export class ChargersService {
       .exec();
   }
 
-  async delete(id: string) {
-    await this.chargerModel.findByIdAndDelete(id);
+  async delete(locationId: string, chargerId: string) {
+    await this.locationModel.findByIdAndUpdate(locationId, {
+      $pullAll: { chargers: [new mongoose.Types.ObjectId(chargerId)] as any },
+    });
+    await this.chargerModel.findByIdAndDelete(chargerId);
   }
 }

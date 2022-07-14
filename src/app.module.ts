@@ -7,7 +7,7 @@ import { ChargersModule } from './chargers/chargers.module';
   imports: [
     MongooseModule.forRoot(process.env['MONGO_URL'], {
       sslValidate: false,
-      dbName: 'electrify',
+      dbName: process.env.DB_NAME,
     }),
     LocationsModule,
     ChargersModule,
