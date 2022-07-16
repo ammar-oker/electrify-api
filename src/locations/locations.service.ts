@@ -21,7 +21,7 @@ export class LocationsService {
     type,
     by,
   }: QueryDto): Promise<ApiResponseDto<Location>> {
-    const sort = { [by || 'lastUpdated']: type || 'asc' };
+    const sort = { [by || 'lastUpdated']: type || 'desc' };
     const pagination =
       !!page && !!perPage ? { skip: perPage * (page - 1), limit: perPage } : {};
     const data = await this.locationModel
