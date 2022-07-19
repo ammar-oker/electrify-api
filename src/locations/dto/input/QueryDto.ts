@@ -18,7 +18,7 @@ export default class {
   @ApiProperty({ required: false })
   @IsOptional()
   @Min(1)
-  @Max(50)
+  @Max(100)
   @Type(() => Number)
   perPage?: number;
 }
